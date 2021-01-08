@@ -10,14 +10,18 @@ class MotorBlock
 private:
     Encoder* encoder;
     Wheel* wheel;
-    
+    int pinPWM;
+    float pwm;
 public:
     MotorBlock();
     ~MotorBlock();
 
-    void createWheels(float wheelRadius, float baseLength);
+    void createWheels(float wheelRadius);
+    
     void setEncorerPin(uint8_t encPin);
+    void setVelocity(int pinPWM, float vel);
 
+    float getRadiusWheels();
 };
 
 

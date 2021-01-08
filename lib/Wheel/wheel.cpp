@@ -1,8 +1,14 @@
 #include "wheel.h"
 
-Wheel::Wheel(){}
+Wheel::Wheel()
+: wheelRadius(0)
+{}
 
-void Wheel::create(float wheelRadius, float baseLength){
+void Wheel::create(float wheelRadius){
     this->wheelRadius = wheelRadius;
-    this->baseLength = baseLength;
+}
+
+float Wheel::getRadius()
+{
+    return wheelRadius;
 }

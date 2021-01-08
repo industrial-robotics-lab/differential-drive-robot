@@ -12,12 +12,23 @@ MotorBlock::~MotorBlock()
     delete wheel; 
 }
 
-void MotorBlock::createWheels(float wheelRadius, float baseLength)
+void MotorBlock::createWheels(float wheelRadius)
 {
-    wheel->create(wheelRadius, baseLength);
+    wheel->create(wheelRadius);
 }
 
 void MotorBlock::setEncorerPin(uint8_t encPin)
 {
     encoder->setPin(encPin);
+}
+
+float MotorBlock::getRadiusWheels()
+{
+    return wheel->getRadius();
+}
+
+void MotorBlock::setVelocity(int pinPWM, float vel)
+{   
+    pwm = map(vel, 0, 1024, 0, 255);
+    analogWrite(pinPWM, pwm);
 }

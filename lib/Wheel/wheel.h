@@ -7,13 +7,11 @@ class Wheel
 
 private:
     float wheelRadius;
-    float baseLength;
     
 public:
     Wheel();
-    void create(float wheelRadius, float baseLength);
-
-
+    void create(float wheelRadius);
+    float getRadius();
 };
 
 
