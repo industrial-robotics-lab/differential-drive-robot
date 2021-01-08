@@ -1,0 +1,19 @@
+#ifndef VELOCITY_H
+#define VELOCITY_H
+#include <math.h>
+
+class Velocity
+{
+private:
+    
+public:
+    float ang;
+    float lin;
+    float R;
+
+    Velocity();
+    float computeLinearSpeed(float velAng, float maxVel);
+    // float 
+};
+
+#endif // VELOCITY_H
