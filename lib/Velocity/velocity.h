@@ -12,7 +12,7 @@ public:
     float R;
 
     Velocity();
-    float computeLinearSpeed(float velAng, float maxVel);
+    
     // float 
 };
 

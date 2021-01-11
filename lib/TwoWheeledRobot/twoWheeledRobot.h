@@ -33,7 +33,9 @@ public:
     float getRadiusWheels();
     void setEncoderPins(uint8_t encPinL, uint8_t encPinR);
     void goToGoal(float x_d, float y_d, float dt);
-    void setPID(float Kp, float Ki, float Kd);
-    // Velocity getVelocity();
+    void tunePID(float Kp, float Ki, float Kd);
+
+    float computeLinearSpeed(float velAng, float maxVel);
 };
+
 #endif // TWO_WHEELED_ROBOT_H
