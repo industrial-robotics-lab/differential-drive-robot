@@ -12,11 +12,10 @@
 
 #define ENCODER_PIN_L 1
 #define ENCODER_PIN_R 2
-double dt = 0.1;
+double dt = 10;
 
 // long rev = 0;         // количество полных оборотов
 // long initPose;
-
 
 
 
@@ -29,7 +28,7 @@ void setup() {
   
   robot.tunePID(0.06, 0.02, 0);
   
-  robot.goToGoal(1, 1, 10);
+  robot.goToGoal(1, 1, dt);
   
 }
 

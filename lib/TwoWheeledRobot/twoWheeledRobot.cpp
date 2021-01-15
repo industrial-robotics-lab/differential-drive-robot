@@ -50,8 +50,6 @@ float TwoWheeledRobot::computeLinearSpeed(float velAng, float maxVel)
 
 void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
 {
-  
-
   //Расчет целевого угла
   thetaGoal = atan2(xGoal-xPos, yGoal-yPos);
   float R = getRadiusWheels();
