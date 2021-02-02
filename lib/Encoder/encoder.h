@@ -14,7 +14,7 @@ class Encoder
 
 private:
     AS5600* enc;
-    uint8_t encPin;
+    byte encPin;
 
     int TCAADDR = 112; // адрес (все контакты на землю)
 
@@ -23,14 +23,15 @@ private:
     float tic_k1; //Значение в (к)-ый момент времени
     
     
-    float rev;
-    float absPosEnc_k1; // абсолютная позиция экнодера в (к)-ый момент времени
+    int rev;
+    
     
 public: 
     Encoder();
     ~Encoder();
-
-    float absPosEnc_k0; // абсолютная позиция экнодера в (к-1)-ый момент времени
+    long absPosEnc_k1; // абсолютная позиция экнодера в (к)-ый момент времени
+    long absPosEnc_k0; // абсолютная позиция экнодера в (к-1)-ый момент времени
+    
     // SET
     void setPin(uint8_t encPin);
 

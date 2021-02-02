@@ -1,6 +1,8 @@
 #include "pid.h"
 
-PID::PID() : Kp(0.0), Ki(0.0), Kd(0.0)
+PID::PID() 
+: Kp(0.0), Ki(0.0), Kd(0.0),
+  errOld(0.0), errSum(0.0), errDot(0.0)
 {}
 
 PID::~PID()
@@ -8,7 +10,7 @@ PID::~PID()
 
 
 float PID::computeControl(float err, float dt)
-{
+{   
     errDot = err - errOld;
     errSum = err + errSum;
 

@@ -1,8 +1,7 @@
 #include "twoWheeledRobot.h"
-
+#include "constants.h"
 
 TwoWheeledRobot::TwoWheeledRobot() 
-: xPos(0.0), yPos(0.0)
 {
   motorBlockL = new MotorBlock();
   motorBlockR = new MotorBlock();
@@ -19,16 +18,22 @@ TwoWheeledRobot::~TwoWheeledRobot()
 
 void TwoWheeledRobot::createWheels(float wheelRadius, float baseLength, float maxVel)
 {
-  motorBlockL->createWheels(wheelRadius);
-  motorBlockR->createWheels(wheelRadius);
+  motorBlockL->createWheel(wheelRadius);
+  motorBlockR->createWheel(wheelRadius);
   this->baseLength = baseLength;
-  this->maxVel = maxVel;
+  vel.max = wheelRadius*maxVel;
 }
 
-void TwoWheeledRobot::setEncoderPins(uint8_t encPinL, uint8_t encPinR)
+void TwoWheeledRobot::setEncoderPins(byte encPinL, byte encPinR)
 {
   motorBlockL->setEncorerPin(encPinL);
   motorBlockR->setEncorerPin(encPinR);
+}
+
+void TwoWheeledRobot::setDriverPins(byte driverPinL1, byte driverPinL2, byte driverPinR1, byte driverPinR2, byte driverPinPWM1, byte driverPinPWM2)
+{
+  motorBlockL->setDriverPin(driverPinL1, driverPinL2, driverPinPWM1);
+  motorBlockR->setDriverPin(driverPinR1, driverPinR2, driverPinPWM2);
 }
 
 void TwoWheeledRobot::tunePID(float Kp, float Ki, float Kd)
@@ -36,52 +41,61 @@ void TwoWheeledRobot::tunePID(float Kp, float Ki, float Kd)
    pid->setCoefficient(Kp, Ki, Kd);
 }
 
+
 float TwoWheeledRobot::getRadiusWheels()
 {
   return motorBlockL->getRadiusWheels();
 }
 
-float TwoWheeledRobot::computeLinearSpeed(float velAng, float maxVel)
-{
-   return maxVel/square((fabs(velAng)+1));
-}
-
-
 
 void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
 {
   //Расчет целевого угла
-  thetaGoal = atan2(xGoal-xPos, yGoal-yPos);
+  pos.thetaGoal = atan2(yGoal-pos.y, xGoal-pos.x);
+  // Serial.print("pos.thetaGoal: "); Serial.println(pos.thetaGoal); // ----- TEST
+  
   float R = getRadiusWheels();
   float L = baseLength;
   
-  for (uint8_t i = 0; i < 100; i++)
+  for (int i = 0; i < 100; i++)
   {
     // расчет ошибки
-    float err = pid->computeAngleError(thetaGoal, theta);
-    //  Serial.print("vel.lin "); Serial.println(vel.lin); // ----- TEST
-    vel.ang = pid->computeControl(err, dt);
-    vel.lin = computeLinearSpeed(vel.ang, maxVel);
+    float err = pid->computeAngleError(pos.thetaGoal, pos.theta);
+    // Serial.print("err: "); Serial.println(err); // ----- TEST
+    // Serial.print("pos.theta: "); Serial.println(pos.theta); // ----- TEST
     
+    vel.ang = pid->computeControl(err, dt/1000);
+    vel.lin = vel.computeLinearSpeed();
+    // Serial.print("vel.ang: "); Serial.println(vel.ang);
+    // Serial.print("vel.lin: "); Serial.println(vel.lin);
+
 
     //Расчет скоростей для каждого двигателся
-
     float velR = (2*vel.lin + vel.ang*L)/(2*R);
     float velL = (2*vel.lin - vel.ang*L)/(2*R);
-    // float velL = motorBlockL->computeMotorSpeed(vel.lin, vel.ang, baseLength);
-    // float velR = motorBlockR->computeMotorSpeed(vel.lin, vel.ang, baseLength);
-    motorBlockL->setVelocity(pinPWM_L, velL, maxVel);
-    motorBlockR->setVelocity(pinPWM_R, velR, maxVel);
 
+    motorBlockL->setVelocity(velL, vel.max);
+    motorBlockR->setVelocity(velR, vel.max);
+    // Serial.print("velL: "); Serial.println(velL);
+    // Serial.print("velR: "); Serial.println(velR);
 
 
     float distWheelL = motorBlockL->getDistance();
     float distWheelR = motorBlockR->getDistance();
     float distWheelC = (distWheelR + distWheelL) / 2;
-    
-    Serial.print("L: "); Serial.println(distWheelR);
-    // Serial.print("R: "); Serial.println(distWheelR);
-    delay(300);
+    // Serial.print("distWheelL: "); Serial.println(distWheelL);
+    // Serial.print("distWheelR: "); Serial.println(distWheelR);
+
+
+    pos.computeCurentPose(distWheelL, distWheelR, distWheelC, L);
+    // Serial.print("X: "); Serial.println(pos.x);
+    // Serial.print("Y: "); Serial.println(pos.y);
+
+    if (DEBUG){
+      Serial.print("R: "); Serial.println(distWheelR);
+      Serial.print("L: "); Serial.println(distWheelL);
+    }
+    delay(dt);
   }
 }
 

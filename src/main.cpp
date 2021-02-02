@@ -1,22 +1,13 @@
 #include <Arduino.h>
 #include "twoWheeledRobot.h"
+#include "constants.h"
 
 //for UNO
 //A4 -- SDA
 //A5 -- SCL
 
 
-#define WHEEL_RADIUS 0.09
-#define BASE_LENGTH 0.3
-#define MAX_VELOCITY 150
-
-#define ENCODER_PIN_L 1
-#define ENCODER_PIN_R 2
-double dt = 10;
-
-// long rev = 0;         // количество полных оборотов
-// long initPose;
-
+double dt = 50;
 
 
 void setup() {
@@ -25,21 +16,15 @@ void setup() {
   robot.createWheels(WHEEL_RADIUS, BASE_LENGTH, MAX_VELOCITY);
   
   robot.setEncoderPins(ENCODER_PIN_L, ENCODER_PIN_R);
-  
+  robot.setDriverPins(DRIVER_IN_A1, DRIVER_IN_A2, DRIVER_IN_B1, DRIVER_IN_B2, DRIVER_PWM_PIN_A, DRIVER_PWM_PIN_B);
   robot.tunePID(0.06, 0.02, 0);
   
   robot.goToGoal(1, 1, dt);
-  
 }
 
 
+
 void loop() {
-  // if (Serial.available() > 0) 
-  // {
-  //   float msg = Serial.read();
-  //   robot.goToGoal(1, 1, 0.1);
-  // }
-  // robot.sendData();
 }
 
 
