@@ -9,10 +9,10 @@ private:
 public:
     float ang;
     float lin;
-    float R;
+    float max;
 
     Velocity();
-    
+    float computeLinearSpeed();
     // float 
 };
 

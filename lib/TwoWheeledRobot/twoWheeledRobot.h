@@ -5,7 +5,7 @@
 #include "motorBlock.h"
 #include "pid.h"
 #include "velocity.h"
-
+#include "position.h"
 
 class TwoWheeledRobot
 {
@@ -14,28 +14,28 @@ private:
     MotorBlock* motorBlockR;
     PID* pid;
     Velocity vel;
+    Position pos;
 
     float baseLength;
-    float thetaGoal;
-    float xPos;
-    float yPos;
-    float theta;
-    float maxVel;
 
-    int pinPWM_L;
-    int pinPWM_R;
 
 public:
     TwoWheeledRobot();
     ~TwoWheeledRobot();
 
     void createWheels(float wheelRadius, float baseLength, float maxVel);
-    float getRadiusWheels();
-    void setEncoderPins(uint8_t encPinL, uint8_t encPinR);
+
+    
     void goToGoal(float x_d, float y_d, float dt);
     void tunePID(float Kp, float Ki, float Kd);
 
-    float computeLinearSpeed(float velAng, float maxVel);
+    
+
+    // SET
+    void setEncoderPins(byte encPinL, byte encPinR);
+    void setDriverPins(byte driverPinL1, byte driverPinL2, byte driverPinR1, byte driverPinR2, byte driverPinPWM1, byte driverPinPWM2);
+    // GET
+    float getRadiusWheels();
 };
 
 #endif // TWO_WHEELED_ROBOT_H

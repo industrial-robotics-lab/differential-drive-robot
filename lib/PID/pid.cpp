@@ -1,6 +1,8 @@
 #include "pid.h"
 
-PID::PID() : Kp(0.0), Ki(0.0), Kd(0.0)
+PID::PID() 
+: Kp(0.0), Ki(0.0), Kd(0.0),
+  errOld(0.0), errSum(0.0), errDot(0.0)
 {}
 
 PID::~PID()
@@ -8,7 +10,7 @@ PID::~PID()
 
 
 float PID::computeControl(float err, float dt)
-{
+{   
     errDot = err - errOld;
     errSum = err + errSum;
 
@@ -19,8 +21,8 @@ float PID::computeControl(float err, float dt)
 
 float PID::computeAngleError(float thetaGoal, float theta)
 {
-    float e = thetaGoal - theta;
-    return atan2(sin(e), cos(e));
+    return thetaGoal - theta;
+    // return atan2(sin(e), cos(e));
 }
 
 void PID::setCoefficient(float Kp, float Ki, float Kd)
