@@ -6,9 +6,7 @@
 //A4 -- SDA
 //A5 -- SCL
 
-
-double dt = 50;
-
+byte dt = 50;
 
 void setup() {
   Serial.begin(9600);
@@ -22,10 +20,10 @@ void setup() {
   robot.goToGoal(1, 1, dt);
 }
 
-
-
 void loop() {
 }
+
+
 
 
 

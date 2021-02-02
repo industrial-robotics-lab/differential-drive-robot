@@ -21,7 +21,7 @@ void TwoWheeledRobot::createWheels(float wheelRadius, float baseLength, float ma
   motorBlockL->createWheel(wheelRadius);
   motorBlockR->createWheel(wheelRadius);
   this->baseLength = baseLength;
-  vel.max = wheelRadius*maxVel;
+  vel.max = 2*PI*wheelRadius*maxVel;
 }
 
 void TwoWheeledRobot::setEncoderPins(byte encPinL, byte encPinR)
@@ -62,7 +62,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     // расчет ошибки
     float err = pid->computeAngleError(pos.thetaGoal, pos.theta);
     // Serial.print("err: "); Serial.println(err); // ----- TEST
-    // Serial.print("pos.theta: "); Serial.println(pos.theta); // ----- TEST
+    // Serial.print("theta: "); Serial.println(pos.theta); // ----- TEST
     
     vel.ang = pid->computeControl(err, dt/1000);
     vel.lin = vel.computeLinearSpeed();
@@ -73,6 +73,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     //Расчет скоростей для каждого двигателся
     float velR = (2*vel.lin + vel.ang*L)/(2*R);
     float velL = (2*vel.lin - vel.ang*L)/(2*R);
+
 
     motorBlockL->setVelocity(velL, vel.max);
     motorBlockR->setVelocity(velR, vel.max);

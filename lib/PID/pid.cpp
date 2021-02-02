@@ -21,8 +21,8 @@ float PID::computeControl(float err, float dt)
 
 float PID::computeAngleError(float thetaGoal, float theta)
 {
-    float e = thetaGoal - theta;
-    return atan2(sin(e), cos(e));
+    return thetaGoal - theta;
+    // return atan2(sin(e), cos(e));
 }
 
 void PID::setCoefficient(float Kp, float Ki, float Kd)

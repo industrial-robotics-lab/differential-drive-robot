@@ -10,14 +10,17 @@ class MotorBlock
 private:
     Encoder* encoder;
 
-    float wheelRadius;
-    byte PWM_PIN;
-    float pwm;
     float distanceTraveled_k1;
     float distanceTraveled_k0;
 
+    byte PWM_PIN;
+    float pwm;
+    
+    float wheelRadius;
+
     byte IN_DRIVER_PIN_1;
     byte IN_DRIVER_PIN_2;
+
 public:
     MotorBlock();
     ~MotorBlock();
