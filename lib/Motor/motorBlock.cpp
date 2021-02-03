@@ -20,6 +20,11 @@ void MotorBlock::createWheel(float wheelRadius)
     this->wheelRadius = wheelRadius;
 }
 
+void MotorBlock::stopMoving()
+{
+    digitalWrite(IN_DRIVER_PIN_1, LOW);
+    digitalWrite(IN_DRIVER_PIN_2, LOW);
+}
 
 // === SET ===
 void MotorBlock::setEncorerPin(byte encPin)
@@ -37,7 +42,7 @@ void MotorBlock::setDriverPin(byte driverPin1, byte driverPin2, byte driverPinPW
 void MotorBlock::setVelocity(float vel, float maxVel)
 {   
 
-    pwm = map(vel, 0, 150, 0, 255);
+    pwm = map(vel, 0, 600, 0, 255);
     // Serial.print("vel: "); Serial.println(vel);
     
     if (vel >= 0)

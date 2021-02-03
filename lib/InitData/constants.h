@@ -2,10 +2,10 @@
 #define CONST_H
 
 
-#define DEBUG 0
+#define DEBUG  0
 
 #define WHEEL_RADIUS 0.045   //m
-#define BASE_LENGTH 0.3     //m
+#define BASE_LENGTH 0.285     //m
 
 
 #define MAX_VELOCITY 150  // об/мин у двигателей

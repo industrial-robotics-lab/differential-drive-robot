@@ -26,7 +26,7 @@ public:
     ~MotorBlock();
 
     void createWheel(float wheelRadius);
-    
+    void stopMoving();
     // SET
     void setEncorerPin(byte encPin);
     void setVelocity(float vel, float maxVel);
