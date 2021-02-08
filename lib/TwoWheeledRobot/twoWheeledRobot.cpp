@@ -66,12 +66,12 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
   float err = 0;
   
   // =========================== FOR ========================
-  for (int i = 0; i <= 100; i++) 
+  for (int i = 0; i <= 70; i++) 
   {
     // Serial.println(millis());
     err = pid->computeAngleError(pos.thetaGoal, pos.theta);
     
-    if (1){
+    if (DEBUG){
       Serial.print("err: "); Serial.println(err, 3);
     }
     if(DEBUG_PLOT){
