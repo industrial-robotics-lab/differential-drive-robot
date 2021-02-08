@@ -9,7 +9,8 @@ private:
 public:
     float ang;
     float lin;
-    float max;
+    float maxRobot;
+    float maxWheel;
 
     Velocity();
     float computeLinearSpeed();
