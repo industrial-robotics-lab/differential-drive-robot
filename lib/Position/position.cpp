@@ -9,8 +9,21 @@ Position::Position()
 }
 
 void Position::computeCurentPose(float D_L, float D_R, float D_C, float L)
-{
-    x = D_C * cos(theta);
-    y = D_C * sin(theta);
+{   
+    float cos_th = 0.0;
+    float sin_th = 0.0;
+    if (theta == 3.1415/2)
+        cos_th = 0.0;
+    else
+        cos_th = cos(theta);
+    
+    if (theta == 0.0)
+        sin_th = 0.0;
+    else
+        sin_th = sin(theta);
+
+
+    x = D_C * cos_th;   
+    y = D_C * sin_th;
     theta = (D_R-D_L)/L;
 }

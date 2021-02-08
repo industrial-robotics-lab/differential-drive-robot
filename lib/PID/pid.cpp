@@ -10,11 +10,11 @@ PID::~PID()
 
 
 float PID::computeControl(float err, float dt)
-{   
+{
     errDot = err - errOld;
     errSum = err + errSum;
 
-    float u = Kp*err + Ki*errSum*dt+ Kd*errOld/dt;
+    float u = Kp*err + Ki*errSum*dt + Kd*errOld/dt;
     errOld = err;
     return u;
 }
