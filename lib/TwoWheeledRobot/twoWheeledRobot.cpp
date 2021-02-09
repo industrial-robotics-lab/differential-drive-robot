@@ -6,7 +6,7 @@ TwoWheeledRobot::TwoWheeledRobot()
   motorBlockL = new MotorBlock();
   motorBlockR = new MotorBlock();
   pid = new PID();
-  
+  pinMode(PIN_CURRENT_SENSOR, LOW);
 }
 
 TwoWheeledRobot::~TwoWheeledRobot()
@@ -66,7 +66,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
   float err = 0;
   
   // =========================== FOR ========================
-  for (int i = 0; i <= 70; i++) 
+  for (int i = 0; i <= 100; i++) 
   {
     // Serial.println(millis());
     err = pid->computeAngleError(pos.thetaGoal, pos.theta);
@@ -108,7 +108,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     }
 
     pos.computeCurentPose(distWheelL, distWheelR, distWheelC, L);
-    if (1){
+    if (DEBUG){
       Serial.print("X: "); Serial.print(pos.x, 3);
       Serial.print("  Y: "); Serial.print(pos.y, 3);
       Serial.print("  Th: "); Serial.println(pos.theta, 3);
@@ -126,16 +126,31 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       Serial.println("You have reached your goal");
       Serial.print("err_X: "); Serial.print(pos.x-xGoal, 3);
       Serial.print("  err_Y: "); Serial.println(pos.y-yGoal, 3);
-      motorBlockL->stopMoving();
-      motorBlockR->stopMoving();
+      stopMoving();
       break;
     }
 
-    // delay(dt);
+    Serial.println(checkCurrent(PIN_CURRENT_SENSOR));
+    if(checkCurrent(PIN_CURRENT_SENSOR)>565)
+    {
+      stopMoving();
+      break;
+    }
+
+
+    delay(dt);
   }
-  motorBlockL->stopMoving();
-  motorBlockR->stopMoving();
+  stopMoving();
   Serial.println(" === STOP === ");
 }
 
+int TwoWheeledRobot::checkCurrent(byte PIN_CURRENT_SENSOR)
+{
+  return analogRead(PIN_CURRENT_SENSOR);
+}
 
+void TwoWheeledRobot::stopMoving()
+{
+  motorBlockL->stopMoving();
+  motorBlockR->stopMoving();
+}
