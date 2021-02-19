@@ -6,7 +6,6 @@ TwoWheeledRobot::TwoWheeledRobot()
   motorBlockL = new MotorBlock();
   motorBlockR = new MotorBlock();
   pid = new PID();
-  
 }
 
 TwoWheeledRobot::~TwoWheeledRobot()
@@ -84,7 +83,6 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       Serial.print("angVel: "); Serial.print(vel.ang);
       Serial.print("  linVel: "); Serial.println(vel.lin);
     }
-
 
     //Расчет скоростей для каждого двигателя
     float velR = (2*vel.lin + vel.ang*L)/(2*R);
