@@ -131,12 +131,14 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     }
 
     Serial.println(checkCurrent(PIN_CURRENT_SENSOR));
-    if(checkCurrent(PIN_CURRENT_SENSOR)>565)
-    {
-      stopMoving();
-      break;
+    Serial.println(i);
+    if (i>7){
+      if(checkCurrent(PIN_CURRENT_SENSOR)>550)
+      {
+        stopMoving();
+        break;
+      }
     }
-
 
     delay(dt);
   }

@@ -18,8 +18,8 @@ void setup() {
   robot.setDriverPins(DRIVER_IN_A1, DRIVER_IN_A2, DRIVER_IN_B1, DRIVER_IN_B2, DRIVER_PWM_PIN_A, DRIVER_PWM_PIN_B);
   robot.tunePID(6, 2.9, 0.0);
 
-  float xGoal = 10;
-  float yGoal = 0;
+  float xGoal = 1;
+  float yGoal = 1;
   robot.goToGoal(xGoal, yGoal, dt);
   // Serial.println(millis());
 }
