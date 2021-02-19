@@ -11,9 +11,7 @@ Encoder::Encoder()
 }
 
 Encoder::~Encoder()
-{
-    delete enc;
-}
+{ delete enc; }
 
 
 void Encoder::tcaSelect(uint8_t i)
@@ -38,7 +36,7 @@ void Encoder::setPin(uint8_t encPin)
 float Encoder::getAbsolutePosition()
 {   
     tcaSelect(encPin);
-    tic_k1 = enc->getPosition() - initPose; // 0-я позиция
+    tic_k1 = enc->getPosition() - initPose; 
 
     if ((tic_k0 - tic_k1) > 2047)
         rev++;

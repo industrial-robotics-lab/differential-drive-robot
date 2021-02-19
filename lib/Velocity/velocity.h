@@ -14,7 +14,7 @@ public:
 
     Velocity();
     float computeLinearSpeed();
-    // float 
+
 };
 
 #endif // VELOCITY_H
