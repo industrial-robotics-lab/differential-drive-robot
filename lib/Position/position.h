@@ -2,7 +2,6 @@
 #define POSITION_H
 #include "math.h"
 
-
 class Position{
 private:
     

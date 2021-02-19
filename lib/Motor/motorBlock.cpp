@@ -29,10 +29,6 @@ void MotorBlock::stopMoving()
         analogWrite(PWM_PIN, i);
         // Serial.println(i);
     }
-   
-    // analogWrite(PWM_PIN, pwmVal);
-    // analogWrite(PWM_PIN, pwmVal/2);
-    // analogWrite(PWM_PIN, 0);
 }
 
 // === SET ===
@@ -51,9 +47,6 @@ void MotorBlock::setDriverPin(byte driverPin1, byte driverPin2, byte driverPinPW
 void MotorBlock::setVelocity(float vel, float maxVel)
 {   
     pwm = map(vel, 0, maxVel, 150, 255);
-    // Serial.print("pwm: "); Serial.println(pwm);
-    // pwm =  changeRange(vel, 0, maxVel, 150, 255);
-    // Serial.print("pwm: "); Serial.println(pwm);
 
     if (vel >= 0)
     {
@@ -68,17 +61,6 @@ void MotorBlock::setVelocity(float vel, float maxVel)
     analogWrite(PWM_PIN, pwm);
 }
 
-float MotorBlock::changeRange(float oldVal, float oldMin, float oldMax, float newMin, float newMax)
-{
-    
-    float oldRange = oldMax-oldMin;
-    if (oldRange == 0)
-        return ceil(newMin);
-    else
-    {
-        return ceil(((oldVal-oldMin)*(newMax-newMin)/oldRange) + newMin);
-    }
-}
 
 
 // === GET ===

@@ -25,11 +25,10 @@ public:
     MotorBlock();
     ~MotorBlock();
 
-    
 
     void createWheel(float wheelRadius);
     void stopMoving();
-    float changeRange(float oldVal, float oldMin, float oldMax, float newMin, float newMax);
+
     // SET
     void setEncorerPin(byte encPin);
     void setVelocity(float vel, float maxVel);
@@ -39,7 +38,5 @@ public:
     float getRadiusWheels();
     float getDistance();
     
-    
-    // float computeMotorSpeed (float linVel, float angVel, float L);
 };
 #endif // MOTOR_H

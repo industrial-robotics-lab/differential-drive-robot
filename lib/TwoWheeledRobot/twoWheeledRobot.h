@@ -1,7 +1,6 @@
 #ifndef TWO_WHEELED_ROBOT_H
 #define TWO_WHEELED_ROBOT_H
 
-
 #include "motorBlock.h"
 #include "pid.h"
 #include "velocity.h"
@@ -16,7 +15,6 @@ private:
     PID* pid;
     Velocity vel;
     Position pos;
-
 
     float baseLength;
     byte PIN_CURRENT_SENSOR = A0;

@@ -2,10 +2,6 @@
 #include "twoWheeledRobot.h"
 #include "constants.h"
 
-//for UNO
-//A4 -- SDA
-//A5 -- SCL
-
 byte dt = 50;
 
 void setup() {
@@ -26,12 +22,3 @@ void setup() {
 
 void loop() {
 }
-
-
-
-
-
-// void debug (String name_debug, float val ) {
-//   Serial.print(name_debug);
-//   Serial.println(val);
-// }

@@ -23,6 +23,4 @@ public:
 
 };
 
-
-
 #endif //PID_H

@@ -85,7 +85,6 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       Serial.print("  linVel: "); Serial.println(vel.lin);
     }
 
-
     //Расчет скоростей для каждого двигателя
     float velR = (2*vel.lin + vel.ang*L)/(2*R);
     float velL = (2*vel.lin - vel.ang*L)/(2*R);
