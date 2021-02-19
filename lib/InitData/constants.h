@@ -15,12 +15,17 @@
 #define ENCODER_PIN_R 1
 #define ENCODER_PIN_L 2
 
-//      Пины на драйвере / Пины на МК
+// ====================================
+// ==== Пины на драйвере / Пины на МК =
+// ====================================
 #define DRIVER_PWM_PIN_A    7
 #define DRIVER_IN_A2        6
 #define DRIVER_IN_A1        5
 #define DRIVER_IN_B1        4
 #define DRIVER_IN_B2        3
 #define DRIVER_PWM_PIN_B    2
+// ====================================
+
+
 
 #endif // CONST_H
