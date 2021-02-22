@@ -1,12 +1,13 @@
 #include "twoWheeledRobot.h"
 #include "constants.h"
 
+
 TwoWheeledRobot::TwoWheeledRobot() 
 {
   motorBlockL = new MotorBlock();
   motorBlockR = new MotorBlock();
   pid = new PID();
-  
+  pinMode(PIN_CURRENT_SENSOR, LOW);
 }
 
 TwoWheeledRobot::~TwoWheeledRobot()
@@ -66,7 +67,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
   float err = 0;
   
   // =========================== FOR ========================
-  for (int i = 0; i <= 250; i++) 
+  for (int i = 0; i <= 100; i++) 
   {
     // Serial.println(millis());
     err = pid->computeAngleError(pos.thetaGoal, pos.theta);
@@ -74,7 +75,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     if (DEBUG){
       Serial.print("err: "); Serial.println(err, 3);
     }
-      if(1){
+    if(DEBUG_PLOT){
       Serial.print("$"); Serial.print(err); Serial.println(";");
     }
 
@@ -84,7 +85,6 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       Serial.print("angVel: "); Serial.print(vel.ang);
       Serial.print("  linVel: "); Serial.println(vel.lin);
     }
-
 
     //Расчет скоростей для каждого двигателя
     float velR = (2*vel.lin + vel.ang*L)/(2*R);
@@ -126,16 +126,33 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       Serial.println("You have reached your goal");
       Serial.print("err_X: "); Serial.print(pos.x-xGoal, 3);
       Serial.print("  err_Y: "); Serial.println(pos.y-yGoal, 3);
-      motorBlockL->stopMoving();
-      motorBlockR->stopMoving();
+      stopMoving();
       break;
     }
 
-    // delay(dt);
+    Serial.println(checkCurrent(PIN_CURRENT_SENSOR));
+    Serial.println(i);
+    if (i>7){
+      if(checkCurrent(PIN_CURRENT_SENSOR)>550)
+      {
+        stopMoving();
+        break;
+      }
+    }
+
+    delay(dt);
   }
-  motorBlockL->stopMoving();
-  motorBlockR->stopMoving();
+  stopMoving();
   Serial.println(" === STOP === ");
 }
 
+int TwoWheeledRobot::checkCurrent(byte PIN_CURRENT_SENSOR)
+{
+  return analogRead(PIN_CURRENT_SENSOR);
+}
 
+void TwoWheeledRobot::stopMoving()
+{
+  motorBlockL->stopMoving();
+  motorBlockR->stopMoving();
+}

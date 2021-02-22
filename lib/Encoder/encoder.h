@@ -7,8 +7,6 @@ extern "C" {
 #include "utility/twi.h"  
 }
 
-// #define TCAADDR 0x70 
-
 class Encoder
 {
 
