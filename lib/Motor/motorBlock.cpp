@@ -75,7 +75,7 @@ float MotorBlock::getDistance()
     float absPos_k0 = encoder->absPosEnc_k0;
     float R = getRadiusWheels();
 
-    distanceTraveled_k1 = distanceTraveled_k0 - 2 * PI * R * (absPos_k1 - absPos_k0) / 4095.0;
+    distanceTraveled_k1 = distanceTraveled_k0 + 2 * PI * R * (absPos_k1 - absPos_k0) / 4095.0;
     
     // Обновление значений
     distanceTraveled_k0 = distanceTraveled_k1;
