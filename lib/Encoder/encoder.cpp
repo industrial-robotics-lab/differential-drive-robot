@@ -1,8 +1,8 @@
 #include "encoder.h"
 
 Encoder::Encoder()
-    :tic_k0(0) , tic_k1(0), rev(0),
-    absPosEnc_k1(0), absPosEnc_k0(0)
+    :ang_k0(0) , ang_k1(0), rev(0),
+    overallTurnEnc_k1(0), overallTurnEnc_k0(0)
 {
     enc = new AS5600();
     tcaSelect(encPin);
@@ -33,17 +33,22 @@ void Encoder::setPin(uint8_t encPin)
 
 
 // === GET ===
-float Encoder::getAbsolutePosition()
+float Encoder::getOverallTurn()
 {   
+    // Считывание угла поворота
     tcaSelect(encPin);
-    tic_k1 = enc->getPosition() - initPose; 
-
-    if ((tic_k0 - tic_k1) > 2047)
+    ang_k1 = enc->getPosition() - initPose; 
+    
+    // Проверка на полный оборот
+    if ((ang_k0 - ang_k1) > 2047)
         rev++;
-    if ((tic_k0 - tic_k1) < -2047)
+    if ((ang_k0 - ang_k1) < -2047)
         rev--;
     
-    absPosEnc_k1 = rev * 4095.0 + tic_k1;
-    tic_k0 = tic_k1;
-    return absPosEnc_k1;
+    // Расчет полных оборотов энкодера + текущий угол
+    overallTurnEnc_k1 = rev * 4095.0 + ang_k1;
+
+    ang_k0 = ang_k1; // Обновление текущего значения угла
+    
+    return overallTurnEnc_k1;
 }

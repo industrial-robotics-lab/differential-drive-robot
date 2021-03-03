@@ -17,24 +17,23 @@ private:
     int TCAADDR = 112; // адрес (все контакты на землю)
 
     float initPose;
-    float tic_k0; //Значение в (к-1)-ый момент времени
-    float tic_k1; //Значение в (к)-ый момент времени
-    
-    
+    float ang_k0; //Значение в (к-1)-ый момент времени
+    float ang_k1; //Значение в (к)-ый момент времени
+
     int rev;
     
     
 public: 
     Encoder();
     ~Encoder();
-    long absPosEnc_k1; // абсолютная позиция экнодера в (к)-ый момент времени
-    long absPosEnc_k0; // абсолютная позиция экнодера в (к-1)-ый момент времени
+    long overallTurnEnc_k1; // абсолютная позиция экнодера в (к)-ый момент времени
+    long overallTurnEnc_k0; // абсолютная позиция экнодера в (к-1)-ый момент времени
     
     // SET
     void setPin(uint8_t encPin);
 
     // GET 
-    float getAbsolutePosition();
+    float getOverallTurn();
     void tcaSelect(uint8_t i);
 };
 

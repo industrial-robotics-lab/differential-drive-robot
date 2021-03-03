@@ -26,10 +26,14 @@ public:
     void createWheels(float wheelRadius, float baseLength, float maxVel);
 
     
-    void goToGoal(float x_d, float y_d, float dt);
+    
     void tunePID(float Kp, float Ki, float Kd);
     int checkCurrent(byte PIN_CURRENT_SENSOR);
     void stopMoving();
+    void goToGoal(float x_d, float y_d, float dt);
+    void goForward();
+    void turnLeft();
+    void turnRight();
 
     // SET
     void setEncoderPins(byte encPinL, byte encPinR);

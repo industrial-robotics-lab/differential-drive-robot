@@ -7,6 +7,6 @@ Velocity::Velocity()
 
 float Velocity::computeLinearSpeed()
 {
-   return maxRobot/square((fabs(ang)+1));
+   return maxWheel/square((fabs(ang)+1));
 }
 
