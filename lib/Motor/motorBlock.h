@@ -36,7 +36,7 @@ public:
 
     // GET
     float getRadiusWheels();
-    float getDistance();
+    float getTraveledDistance();
     
 };
 #endif // MOTOR_H
