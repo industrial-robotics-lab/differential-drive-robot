@@ -78,7 +78,8 @@ float MotorBlock::getTraveledDistance()
 
     // Расчет пройденного расстояния колесом
     distanceTraveled_k1 = distanceTraveled_k0 + 2 * PI * R * (ovTurn_k1 - ovTurn_k0) / 4095.0;
-    
+    // distanceTraveled_k1 = 2 * PI * R * (ovTurn_k1 - ovTurn_k0) / 4095.0;
+
     // Обновление значений
     distanceTraveled_k0 = distanceTraveled_k1; // по пройденному расстоянию
     encoder->overallTurnEnc_k0 = ovTurn_k1;    // по абсолютному улглу энкодера

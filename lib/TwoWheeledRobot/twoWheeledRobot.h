@@ -17,7 +17,9 @@ private:
     Position pos;
 
     float baseLength;
-    byte PIN_CURRENT_SENSOR = A0;
+    byte PIN_CURRENT_SENSOR = A12;
+
+    
 
 public:
     TwoWheeledRobot();
@@ -37,7 +39,7 @@ public:
 
     // SET
     void setEncoderPins(byte encPinL, byte encPinR);
-    void setDriverPins(byte driverPinL1, byte driverPinL2, byte driverPinR1, byte driverPinR2, byte driverPinPWM1, byte driverPinPWM2);
+    void setDriverPins(byte driverPinPWM_R, byte driverPin_R2, byte driverPin_R1, byte driverPin_L1, byte driverPin_L2, byte driverPinPWM_L);
     // GET
     float getRadiusWheels();
 };
