@@ -19,7 +19,7 @@ private:
     float baseLength;
     byte PIN_CURRENT_SENSOR = A12;
 
-    
+    bool reachedGoal;
 
 public:
     TwoWheeledRobot();
@@ -31,6 +31,8 @@ public:
     
     void tunePID(float Kp, float Ki, float Kd);
     int checkCurrent(byte PIN_CURRENT_SENSOR);
+
+    void manualControl();
     void stopMoving();
     void goToGoal(float x_d, float y_d, float dt);
     void goForward();

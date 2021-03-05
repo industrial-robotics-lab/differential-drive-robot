@@ -2,8 +2,10 @@
 #include "constants.h"
 
 
-TwoWheeledRobot::TwoWheeledRobot() 
+TwoWheeledRobot::TwoWheeledRobot()
+:reachedGoal(0)
 {
+  Serial.begin(9600);
   motorBlockL = new MotorBlock();
   motorBlockR = new MotorBlock();
   pid = new PID();
@@ -67,31 +69,22 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
   float err = 0;
   
   // ================================== FOR ===============================
-  for (int i = 0; i <= 50; i++) 
+  while(!reachedGoal)
   {
     err = pid->computeAngleError(pos.thetaGoal, pos.theta);
     
-    if(DEBUG){
-      Serial.print("err: "); Serial.println(err, 3);
-    }
-    if(DEBUG){
-      Serial.print("$"); Serial.print(err); Serial.println(";");
-    }
+    
 
     vel.ang = pid->computeControl(err, dt/1000);
     vel.lin = vel.computeLinearSpeed();
-    if (DEBUG){
-      Serial.print("angVel: "); Serial.print(vel.ang);
-      Serial.print("  linVel: "); Serial.println(vel.lin);
-    }
+
+    
 
     //Расчет скоростей для каждого двигателя
     float velR = (2*vel.lin + vel.ang*L)/(2*R);
     float velL = (2*vel.lin - vel.ang*L)/(2*R);
-    if (DEBUG){
-      Serial.print("velL: "); Serial.print(velL);
-      Serial.print("  velR: "); Serial.println(velR);
-    }
+
+   
 
     // motorBlockL->setVelocity(0, vel.maxRobot/R);
     // motorBlockR->setVelocity(0, vel.maxRobot/R);
@@ -103,19 +96,11 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     float distWheelL = motorBlockL->getTraveledDistance();
     float distWheelR = motorBlockR->getTraveledDistance();
     float distWheelC = (distWheelR+distWheelL) / 2;
-    if (DEBUG){
-      Serial.print("distWheelL: "); Serial.print(distWheelL, 3);
-      Serial.print("  distWheelR: "); Serial.print(distWheelR, 3);
-      Serial.print("  distWheelC: "); Serial.println(distWheelC, 3);
-    }
+
+    
 
     pos.computeCurentPose(distWheelL, distWheelR, distWheelC, L);
-    if (DEBUG){
-      Serial.print("X: "); Serial.print(pos.x, 3);
-      Serial.print("  Y: "); Serial.print(pos.y, 3);
-      Serial.print("  Th: "); Serial.println(pos.theta, 3);
-      Serial.println("  -------  ");
-    }
+ 
     if (DEBUG_PLOT){
       Serial.print("$");
       Serial.print(pos.x, 3);Serial.print(" ");Serial.print(pos.y, 3);
@@ -128,19 +113,50 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       Serial.println("You have reached your goal");
       Serial.print("err_X: "); Serial.print(pos.x-xGoal, 3);
       Serial.print("  err_Y: "); Serial.println(pos.y-yGoal, 3);
+      reachedGoal = true;
+    }
+
+    if(reachedGoal)
+    {
       stopMoving();
       break;
     }
-
+    
+       if(DEBUG){
+      Serial.print("err: "); Serial.println(err, 3);
+    }
+    if(DEBUG){
+      Serial.print("$"); Serial.print(err); Serial.println(";");
+    }
+    if (DEBUG){
+      Serial.print("angVel: "); Serial.print(vel.ang);
+      Serial.print("  linVel: "); Serial.println(vel.lin);
+    }
+    if (DEBUG){
+      Serial.print("velL: "); Serial.print(velL);
+      Serial.print("  velR: "); Serial.println(velR);
+    }
+    if (DEBUG){
+      Serial.print("distWheelL: "); Serial.print(distWheelL, 3);
+      Serial.print("  distWheelR: "); Serial.print(distWheelR, 3);
+      Serial.print("  distWheelC: "); Serial.println(distWheelC, 3);
+    }
+    if (DEBUG){
+      Serial.print("X: "); Serial.print(pos.x, 3);
+      Serial.print("  Y: "); Serial.print(pos.y, 3);
+      Serial.print("  Th: "); Serial.println(pos.theta, 3);
+      Serial.println("  -------  ");
+    }
+    
     // Serial.println(checkCurrent(PIN_CURRENT_SENSOR));
     // Serial.println(i);
-    if (i>7){
-      if(checkCurrent(PIN_CURRENT_SENSOR)>550)
-      {
-        stopMoving();
-        break;
-      }
-    }
+    // if (i>7){
+    //   if(checkCurrent(PIN_CURRENT_SENSOR)>550)
+    //   {
+    //     stopMoving();
+    //     break;
+    //   }
+    // }
 
     delay(dt);
   }
@@ -153,6 +169,32 @@ int TwoWheeledRobot::checkCurrent(byte PIN_CURRENT_SENSOR)
   return analogRead(PIN_CURRENT_SENSOR);
 }
 
+
+
+// ========================== manual control =====================
+
+void TwoWheeledRobot::manualControl()
+{
+  while(true)
+  {
+    byte inByte = Serial.read();
+
+    switch (inByte)
+    {
+      case ('w'):
+        goForward();
+      break;
+      case ('s'):
+        stopMoving();
+      break;
+
+      // default:
+        
+    }
+  }
+}
+
+
 void TwoWheeledRobot::stopMoving()
 {
   motorBlockL->stopMoving();
@@ -164,31 +206,17 @@ void TwoWheeledRobot::goForward()
 {
   motorBlockL->setVelocity(150, vel.maxWheel);
   motorBlockR->setVelocity(150, vel.maxWheel);
-  // float distWheelL = motorBlockL->getTraveledDistance();
-  // float distWheelR = motorBlockR->getTraveledDistance();
 }
 
 void TwoWheeledRobot::turnLeft()
 {
   // motorBlockL->setVelocity(150, vel.maxWheel);
   motorBlockL->setVelocity(50, vel.maxWheel);
-  for (int i = 0; i <= 50; i++) 
-  {
-    float distWheelL = motorBlockL->getTraveledDistance();
-    Serial.println(distWheelL);
-    delay(50);
-  }
 }
 
 void TwoWheeledRobot::turnRight()
 {
   // motorBlockL->setVelocity(150, vel.maxWheel);
   motorBlockR->setVelocity(50, vel.maxWheel);
-  for (int i = 0; i <= 50; i++) 
-  {
-    float distWheelR = motorBlockR->getTraveledDistance();
-    Serial.println(distWheelR);
-    delay(50);
-  }
 
 }
