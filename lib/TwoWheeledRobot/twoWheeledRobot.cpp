@@ -122,7 +122,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       break;
     }
     
-       if(DEBUG){
+    if(DEBUG){
       Serial.print("err: "); Serial.println(err, 3);
     }
     if(DEBUG){
