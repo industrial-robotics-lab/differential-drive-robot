@@ -13,13 +13,12 @@ void setup() {
   robot.setDriverPins(DRIVER_PWM_PIN_A, DRIVER_IN_A2, DRIVER_IN_A1 , DRIVER_IN_B1, DRIVER_IN_B2,  DRIVER_PWM_PIN_B);
   robot.tunePID(5.3, 4.8, 0);
 
+  // robot.serialControl();
+
   float xGoal = 1;
   float yGoal = 1;
-  // robot.goToGoal(xGoal, yGoal, dt);
-
-  robot.manualControl();
-
-
+  robot.goToGoal(xGoal, yGoal, dt);
+  // robot.manualControl();
 }
 
 

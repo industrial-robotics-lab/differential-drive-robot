@@ -43,9 +43,9 @@ void MotorBlock::setDriverPin(byte driverPin1, byte driverPin2, byte driverPinPW
     PWM_PIN = driverPinPWM;
 }
 
-void MotorBlock::setVelocity(float vel, float maxVel)
+void MotorBlock::setVelocity(float vel, float maxVel, int newMinRange)
 {
-    pwm = map(abs(vel), 0, maxVel, 150, 255);
+    pwm = map(abs(vel), 0, maxVel, newMinRange, 255);
 
     if (vel > 0)
     {
