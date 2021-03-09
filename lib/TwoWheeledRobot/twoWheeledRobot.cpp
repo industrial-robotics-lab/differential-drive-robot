@@ -187,8 +187,12 @@ void TwoWheeledRobot::manualControl()
       case ('s'):
         stopMoving();
       break;
-
-      // default:
+      case ('d'):
+        turnRight();
+      break;
+      case ('a'):
+        turnLeft();
+      break;
         
     }
   }
@@ -210,13 +214,13 @@ void TwoWheeledRobot::goForward()
 
 void TwoWheeledRobot::turnLeft()
 {
-  // motorBlockL->setVelocity(150, vel.maxWheel);
-  motorBlockL->setVelocity(50, vel.maxWheel);
+  motorBlockL->setVelocity(-50, vel.maxWheel);
+  motorBlockR->setVelocity(100, vel.maxWheel);
 }
 
 void TwoWheeledRobot::turnRight()
 {
-  // motorBlockL->setVelocity(150, vel.maxWheel);
-  motorBlockR->setVelocity(50, vel.maxWheel);
+  motorBlockL->setVelocity(100, vel.maxWheel);
+  motorBlockR->setVelocity(-50, vel.maxWheel);
 
 }
