@@ -3,9 +3,9 @@
 
 
 TwoWheeledRobot::TwoWheeledRobot()
-  :reachedGoal(false), 
-  PIN_CURRENT_SENSOR(A12)
-  // inByte(0), newMinRahge(150)
+  :reachedGoal(0), 
+  PIN_CURRENT_SENSOR(A12),
+  inByte(0), newMinRahge(150)
 {
   Serial.begin(9600);
   motorBlockL = new MotorBlock();
@@ -34,8 +34,8 @@ void TwoWheeledRobot::createWheels(float wheelRadius, float baseLength, float ma
   }
 }
 
-// === SET ===
 
+// === SET ===
 void TwoWheeledRobot::setEncoderPins(byte encPinL, byte encPinR)
 {
   motorBlockL->setEncorerPin(encPinL);
@@ -68,7 +68,6 @@ byte TwoWheeledRobot::getSerialData()
 
 void TwoWheeledRobot::serialControl()
 {
-
   while (true)
   {
     inByte = getSerialData();
@@ -113,8 +112,8 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     float velR = (2*vel.lin + vel.ang*L)/(2*R);
     float velL = (2*vel.lin - vel.ang*L)/(2*R);
 
-    motorBlockL->setVelocity(velL, vel.maxWheel, 150);
-    motorBlockR->setVelocity(velR, vel.maxWheel, 150);
+    motorBlockL->setVelocity(velL, vel.maxWheel, newMinRahge);
+    motorBlockR->setVelocity(velR, vel.maxWheel, newMinRahge);
 
     float distWheelL = motorBlockL->getTraveledDistance();
     float distWheelR = motorBlockR->getTraveledDistance();
@@ -148,7 +147,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     if (DEBUG){
       Serial.print("$"); Serial.print(err); Serial.println(";");
     }
-    if (1){
+    if (DEBUG){
       Serial.print("angVel: "); Serial.print(vel.ang);
       Serial.print("  linVel: "); Serial.println(vel.lin);
     }
@@ -180,12 +179,16 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
     // }
 
   
-    // switch (getSerialData())
-    // {
-    //   case ('s'):
-    //     stopMoving();
-    //   break;
-    // }
+    switch(getSerialData())
+    {
+      case('s'):
+        stopMoving();
+      break;
+      case('r'):
+        stopMoving();
+        break;
+      break;
+    }
 
     delay(dt);
   }
@@ -221,6 +224,10 @@ void TwoWheeledRobot::manualControl()
         turnLeft(0, 80);
       break;
     }
+    // if (getSerialData() == 'r')
+    // {
+    //    break;
+    // }
   }
 }
 

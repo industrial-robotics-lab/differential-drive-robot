@@ -20,7 +20,7 @@ private:
     byte PIN_CURRENT_SENSOR;
 
     bool reachedGoal;
-    // int newMinRahge; // Для функции map в setVelocity
+    int newMinRahge; // Для функции map в setVelocity
     byte inByte;
 
 public:
