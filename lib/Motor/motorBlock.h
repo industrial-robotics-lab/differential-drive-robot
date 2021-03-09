@@ -31,12 +31,12 @@ public:
 
     // SET
     void setEncorerPin(byte encPin);
-    void setVelocity(float vel, float maxVel);
+    void setVelocity(float vel, float maxVel, int newMinRange);
     void setDriverPin(byte driverPin1, byte driverPin2, byte driverPinPWM);
 
     // GET
     float getRadiusWheels();
-    float getDistance();
+    float getTraveledDistance();
     
 };
 #endif // MOTOR_H

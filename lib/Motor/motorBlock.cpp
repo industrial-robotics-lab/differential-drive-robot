@@ -27,7 +27,6 @@ void MotorBlock::stopMoving()
         i=i-10;
         i=(i<0)?0:i;
         analogWrite(PWM_PIN, i);
-        // Serial.println(i);
     }
 }
 
@@ -44,11 +43,11 @@ void MotorBlock::setDriverPin(byte driverPin1, byte driverPin2, byte driverPinPW
     PWM_PIN = driverPinPWM;
 }
 
-void MotorBlock::setVelocity(float vel, float maxVel)
-{   
-    pwm = map(vel, 0, maxVel, 150, 255);
+void MotorBlock::setVelocity(float vel, float maxVel, int newMinRange)
+{
+    pwm = map(abs(vel), 0, maxVel, newMinRange, 255);
 
-    if (vel >= 0)
+    if (vel > 0)
     {
         digitalWrite(IN_DRIVER_PIN_1, LOW);
         digitalWrite(IN_DRIVER_PIN_2, HIGH);
@@ -62,34 +61,28 @@ void MotorBlock::setVelocity(float vel, float maxVel)
 }
 
 
-
 // === GET ===
 float MotorBlock::getRadiusWheels()
 {
     return wheelRadius;
 }
 
-float MotorBlock::getDistance()
+float MotorBlock::getTraveledDistance()
 {   
-    float absPos_k1 = encoder->getAbsolutePosition();
-    float absPos_k0 = encoder->absPosEnc_k0;
+    float ovTurn_k0 = encoder->overallTurnEnc_k0;
+    float ovTurn_k1 = encoder->getOverallTurn();
     float R = getRadiusWheels();
 
-    distanceTraveled_k1 = distanceTraveled_k0 - 2 * PI * R * (absPos_k1 - absPos_k0) / 4095.0;
-    
+
+    // Расчет пройденного расстояния колесом
+    distanceTraveled_k1 = distanceTraveled_k0 + 2 * PI * R * (ovTurn_k1 - ovTurn_k0) / 4095.0;
+    // distanceTraveled_k1 = 2 * PI * R * (ovTurn_k1 - ovTurn_k0) / 4095.0;
+
     // Обновление значений
-    distanceTraveled_k0 = distanceTraveled_k1;
-    encoder->absPosEnc_k0 = absPos_k1;
-    return distanceTraveled_k0;
+    distanceTraveled_k0 = distanceTraveled_k1; // по пройденному расстоянию
+    encoder->overallTurnEnc_k0 = ovTurn_k1;    // по абсолютному улглу энкодера
+
+    return distanceTraveled_k1;
 }
 
 
-
-
-
-
-// float MotorBlock::computeMotorSpeed (float linVel, float angVel, float L)
-// {   
-//     float R = getRadiusWheels();
-//     return (2*linVel + angVel*L)/(2*R);
-// }
