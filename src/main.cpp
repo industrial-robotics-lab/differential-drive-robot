@@ -19,7 +19,6 @@ void setup() {
   // float yGoal = 1;
   // robot.goToGoal(xGoal, yGoal, dt);
   // robot.manualControl();
-  
 }
 
 
