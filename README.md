@@ -6,15 +6,15 @@ This project is designed to control a mobile differential drive robot.
 
 ## Repository structure
 
-lib
-> AS5600
-> Encoder
-> InitData
-> Motor
-> PID
-> Position
-> TwoWheeledRobot
-> Velocity
+> lib
+>> AS5600
+>> Encoder
+>> InitData
+>> Motor
+>> PID
+>> Position
+>> TwoWheeledRobot
+>> Velocity
 
 src
 > main.cpp
