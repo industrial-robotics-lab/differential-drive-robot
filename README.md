@@ -36,7 +36,6 @@ Clone the repository:
 git clone https://github.com/industrial-robotics-lab/differentiall-steered-platform.git
 ```
 
-## Управление роботом
 
 ## License
 
