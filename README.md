@@ -1,3 +1,4 @@
+
 # Differential Drive Robot
 
 ## Introduction
@@ -5,7 +6,6 @@
 This project is designed to control a mobile differential drive robot.
 
 ## Repository structure
-
 > lib  
 >> AS5600  
 >> Encoder  
@@ -17,7 +17,7 @@ This project is designed to control a mobile differential drive robot.
 >> Velocity
 
 >src
->> main.cpp  
+>> main.cp
 
 ## Robot design
 
@@ -33,6 +33,8 @@ Below is the connection of all elements
 
 ## Dependencies
 
+### **PlatformioIO**
+
 This code works on Arduino Mega 2560 using **PlatformioIO**
 
 You can download [PlatformIO Core](https://docs.platformio.org/en/latest/core/installation.html#piocore-install-shell-commands) separately.
@@ -40,6 +42,10 @@ You can download [PlatformIO Core](https://docs.platformio.org/en/latest/core/in
 Or use the [Visual Studio Code IDE Extension](https://platformio.org/install/ide?install=vscode).
 
 (Please note that you do not need to install PlatformIO Core if you are going to use PlatformIO IDE. PlatformIO Core is built into PlatformIO IDE and you will be able to use it within PlatformIO IDE Terminal.)
+
+### AS5600
+
+This code uses a third party library AS5600 licensed under the [GPL-3.0 License](https://choosealicense.com/licenses/gpl-3.0/)
 
 ## Code structure
 
