@@ -65,6 +65,11 @@ byte TwoWheeledRobot::getSerialData()
   return Serial.read();
 }
 
+// void TwoWheeledRobot::sendSerialData(std::sring &str)
+// {
+//   Serial.writeln(str);
+// }
+
 
 void TwoWheeledRobot::serialControl()
 {
@@ -75,7 +80,7 @@ void TwoWheeledRobot::serialControl()
       {
         case ('m'):
         Serial.println("=== You are using manual control ===");
-          manualControl();
+          manualControl(50);
         break;
         case ('g'):
           goToGoal(1,1, 50);
@@ -129,6 +134,7 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
       Serial.print("  err_Y: "); Serial.println(pos.y-yGoal, 3);
       reachedGoal = true;
     }
+
 
     if(reachedGoal)
     {
@@ -196,38 +202,52 @@ void TwoWheeledRobot::goToGoal(float xGoal, float yGoal, float dt)
 
 
 // ==== manual control ==== //
-void TwoWheeledRobot::manualControl()
+void TwoWheeledRobot::manualControl(float dt)
 {
+  int vel = 60;
+
+
   while(true)
   {
     switch (getSerialData())
     {
       case ('w'):
-        goForward(150, 150);
+        goForward(vel, vel);
       break;
       case ('x'):
-        goForward(-150, -150);
+        goForward(-vel, -vel);
       break;
       case ('s'):
         stopMoving();
       break;
       case ('d'):
-        turnRight(100, -50);
+        turnRight(vel, 0);
       break;
       case ('a'):
-        turnLeft(-50, 100);
+        turnLeft(0, vel);
       break;
       case ('e'):
-        turnRight(80, 0);
+        // turnRight(100, -50);
+        vel += 5;
+        (vel >= 150) ? 150 : vel;
+
       break;
       case ('q'):
-        turnLeft(0, 80);
+        // turnLeft(-50, 100);
+        vel -= 5;
+        (vel <= 0) ? 0 : vel;
       break;
     }
-    // if (getSerialData() == 'r')
-    // {
-    //    break;
-    // }
+
+    float distWheelL = motorBlockL->getTraveledDistance();
+    float distWheelR = motorBlockR->getTraveledDistance();
+    float distWheelC = (distWheelR + distWheelL) / 2;
+
+    pos.computeCurentPose(distWheelL, distWheelR, distWheelC, baseLength);
+
+    String msg_enc = String(pos.x, 3) + " " + String(pos.y, 3);
+    Serial.println(msg_enc);
+    delay(dt);
   }
 }
 
