@@ -57,12 +57,6 @@ if __name__=="__main__":
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)                 
 
 
-    # cmd_rm = "rm -rf /home/azh/1_Project/SLAM_P/Datasets/CAM_ROBOT"
-    # cmd_ssh = "scp -r -C azh@{}:/home/azh/1_Project/Python_P/ITMO_Lab/CAM_ROBOT \
-    #                          /home/azh/1_Project/SLAM_P/Datasets/".format(HOST)
-                             
-    # os.system(str(cmd_rm))
-    # os.system(str(cmd_ssh))
 
 
 
