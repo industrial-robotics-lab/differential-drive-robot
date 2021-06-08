@@ -14,8 +14,8 @@ sys.path.append('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
 s = serial.Serial()
 s.baudrate = 9600
-# s.port = '/dev/ttyUSB0'   # for Raspberry
-s.port = '/dev/ttyACM0'     # for Linux
+s.port = '/dev/ttyUSB0'   # for Raspberry
+# s.port = '/dev/ttyACM0'     # for Linux
 s.timeout = 0.5
 s.open()
 
@@ -58,18 +58,19 @@ sck.listen()
 conn, addr = sck.accept()
 print("connect to: ", addr)
 
-sockets_to_check = [conn.fileno()]
+# sockets_to_check = [conn.fileno()]
 while True:
-    ready_sockets = select.select(sockets_to_check, [], sockets_to_check, 0)
-    if (len(ready_sockets[0]) > 0):
-        data = conn.recv(1)
-        print(data)
-        if (data == b'\x03'):
-            # event_break.set() # for img read
-            break
-        s.write(data)
-        # time.sleep(0.001)
-    conn.close()
+    # ready_sockets = select.select(sockets_to_check, [], sockets_to_check, 0)
+    # if (len(ready_sockets[0]) > 0):
+    data = conn.recv(1)
+    print(data)
+    if (data == b'\x03'):
+        # event_break.set() # for img read
+        break
+    
+    s.write(data)
+    # time.sleep(0.001)
+conn.close()
 
 
 # event_break = threading.Event()
