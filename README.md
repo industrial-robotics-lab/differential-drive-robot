@@ -24,6 +24,8 @@ This project is designed to control a mobile differential drive robot.
 >> SocketServer.py  
 >> SocketClient.py
 
+All robot parameters and pin numbers are in the file lib/InitData/constants.h
+
 ## Robot design
 
 The robot includes the following devices and sensors:
@@ -98,6 +100,7 @@ For control is used the keyboard of your PC:
 `s` - stop moving  
 `e` - increase the speed of rotation of the wheels  
 `q` - reduce the speed of rotation of the wheels  
+`Ctrl+c` - shutdown client and server
 
 ## License
 
