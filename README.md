@@ -86,7 +86,7 @@ python3 scripts/SocketServer.py
 ```
 
 
-Run the client on PC
+Run the client on PC:
 ```bash
 python3 scripts/SocketClient.py
 ```
