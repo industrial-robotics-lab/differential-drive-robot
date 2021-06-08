@@ -1,4 +1,5 @@
 
+
 # Differential Drive Robot
 
 ## Introduction
@@ -18,6 +19,10 @@ This project is designed to control a mobile differential drive robot.
 
 >src
 >> main.cp
+
+> scripts
+>> SocketServer.py  
+>> SocketClient.py
 
 ## Robot design
 
@@ -47,14 +52,17 @@ Or use the [Visual Studio Code IDE Extension](https://platformio.org/install/ide
 
 This code uses a third party library AS5600 licensed under the [GPL-3.0 License](https://choosealicense.com/licenses/gpl-3.0/)
 
-## Code structure
+## Classes
+
+<!-- ![](https://github.com/AZhed/2WRobot/img/classes.png) -->
+<img src="img/classes.png" width="400">
 
 ## Using
 
 Clone the repository:
 
 ```arduino
-git clone https://github.com/industrial-robotics-lab/differentiall-steered-platform.git
+git clone https://github.com/industrial-robotics-lab/differential-drive-robot.git
 ```
 
 ## Robot control
