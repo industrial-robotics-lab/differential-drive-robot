@@ -41,7 +41,7 @@ public:
 // ========= behavior ===========
     void serialControl();
     void goToGoal(float x_d, float y_d, float dt);
-    void manualControl();
+    void manualControl(float dt);
 
 
     void goForward(int velL, int velR);
